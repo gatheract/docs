@@ -4,7 +4,7 @@
 
 ### Live
 
-The master mranch can be viewed live at
+The master branch can be viewed live at
 
 - https://gatheract.github.io/docs/
 - https://gatheract.com/create
