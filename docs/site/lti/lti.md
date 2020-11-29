@@ -1,13 +1,9 @@
 [![GATHERACT](docs/assets/logo.svg)](https://gatheract.com)
 [![LTIJS](docs/assets/logo-lti.svg)](https://cvmcosta.github.io/ltijs/#/provider)
 
-
-
 > GatherAct LTI Integration API
 
-
 [![Ltijs provider](https://img.shields.io/badge/ltijs-provider-brightgreen.svg)](https://cvmcosta.github.io/ltijs/#/provider)
-
 
 ---
 
@@ -17,14 +13,11 @@ The Learning Tools Interoperability (LTI®) protocol is a standard for integrati
 
 Implementing the LTI® 1.3 protocol and all of it's services can be a very difficult, time consuming task. Through **GatherAct** any project can be easily turned into a fully LTI® 1.3 compliant learning tool, with minimal alterations to the project's codebase.
 
-**GatherAct** gives the application access to all of the LTI® services and functionalities through a very simple to use API. 
+**GatherAct** gives the application access to all of the LTI® services and functionalities through a very simple to use API.
 
 The **GatherAct** LTI project was built using the **IMS LTI® Advantage Complete Certified library** [Ltijs](https://site.imsglobal.org/certifications/coursekey/ltijs). For more information visit the [Ltijs documentation](https://cvmcosta.me/ltijs/#/provider).
 
-
 ---
-
-
 
 ## Table of Contents
 
@@ -67,7 +60,6 @@ The **GatherAct** LTI project was built using the **IMS LTI® Advantage Complete
 
 ## The LTI® 1.3 Protocol
 
-
 The learning tools interoperability (LTI®) protocol describes how any learning resource can communicate with a Learning management system (LMS) and exchange relevant information, seamlessly integrating them together to improve the educational process.
 
 Possible interactions between Platforms and the Tools are described as Services. The LTI® 1.3 protocol officially describes 4 Services:
@@ -76,8 +68,6 @@ Possible interactions between Platforms and the Tools are described as Services.
 - **Deep Linking**
 - **Names and Roles Provisioning (Memberships)**
 - **Assignment and Grade**
-
-
 
 ### Core
 
@@ -107,14 +97,12 @@ A **Custom Parameter** is a key-value pair set at the moment of the creation of 
 
 More information about the LTI Launch and the IdToken can be found in the [Official IMS LTI® Specification](https://www.imsglobal.org/spec/lti/v1p3/).
 
-
 ### Deep Linking
 
-The [Deep Linking Service](https://www.imsglobal.org/spec/lti-dl/v2p0) can be used to create Tool Links inside a Platform. 
+The [Deep Linking Service](https://www.imsglobal.org/spec/lti-dl/v2p0) can be used to create Tool Links inside a Platform.
 
 The Deep Linking process consists of a Launch to the Tool’s deep linking endpoint where the user can select which resource(s) they want to link. The tool will then generate a signed JWT containing the selected resources and submit this message through a self-submitting form to the Platform.
 
-  
 Deep Linking resources are called “Content Items”, Tool Links are only one of the available types of Content Item:
 
 - LTI® Resource Link (Tool Link).
@@ -123,8 +111,7 @@ Deep Linking resources are called “Content Items”, Tool Links are only one o
 - HTML Fragment
 - Image
 
-**GatherAct** uses Deep Linking to allow users to Launch directly to you application inside a Platform. 
-
+**GatherAct** uses Deep Linking to allow users to Launch directly to you application inside a Platform.
 
 ### Names and Roles Provisioning
 
@@ -149,7 +136,6 @@ The [Assignment and Grade Service](https://www.imsglobal.org/spec/lti-ags/v2p0) 
 
 - **Result Service** - Allows Tools to retrieve scores from lines items in the current context’s grade book.
 
-
 ---
 
 ## API Documentation
@@ -160,27 +146,23 @@ Through the **GatherAct** LTI API it's possible to access all of the LTI® 1.3 s
 
 - **/idtoken [GET]** - Retrieve IdToken for the current launch context.
 - **/memberships [GET]** - Retrieve a list of user memberships inside the current Platform context.
-- **/lineitems [GET, POST]**  - Retrieve and create line items.
+- **/lineitems [GET, POST]** - Retrieve and create line items.
   - **/:lineitemId [GET, PUT, DELETE]** - Retrieve, update and delete a line item.
     - **/scores [GET, POST]** - Retrieve or Publish scores to a line item.
-
 
 ### Authentication
 
 After a successful LTI® Launch is completed, **GatherAct** will redirect the user to your application. **GatherAct** will also append a `ltik` query parameter, a signed JWT identifying the current launch context.
 
-*GatherAct launch flow:*
+_GatherAct launch flow:_
 
 ![Launch flow](docs/assets/launch.png)
 
-
-
 This token **MUST be returned whenever the Tool wants to access any of the** [LTI API endpoints](#endpoints).
 
-*GatherAct LTI API access flow:*
+_GatherAct LTI API access flow:_
 
 ![API access flow](docs/assets/access.png)
-
 
 The `ltik` token can be passed to the API as a query parameter, body parameter or in the Authorization header (Bearer or LTIK-AUTH-V1).
 
@@ -208,7 +190,7 @@ Example:
 
 ```javascript
 {
-  ltik: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+	ltik: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
 }
 ```
 
@@ -217,7 +199,6 @@ Example:
 The `ltik` parameter can be passed through a Bearer Authorization header:
 
 > Authorization: Bearer \<ltik\>
-
 
 Example:
 
@@ -242,9 +223,9 @@ When using the `LTIK-AUTH-V1` authorization schema, `req.headers.authorization` 
 
 **GatherAct** will look for the `ltik` in the following order:
 
-- LTIK-AUTH-V1 Authorization 
-- query 
-- body 
+- LTIK-AUTH-V1 Authorization
+- query
+- body
 - Bearer Authorization
 
 ### IdToken Endpoint
@@ -253,9 +234,9 @@ The **/idtoken** endpoint is used to retrieve an IdToken object containing the c
 
 #### Retrieve IdToken
 
-| ROUTE | METHOD  | LTIK REQUIRED |
-| ---- | --- | -- |
-| `/idtoken` | `GET` | ✔️ |
+| ROUTE      | METHOD | LTIK REQUIRED |
+| ---------- | ------ | ------------- |
+| `/idtoken` | `GET`  | ✔️            |
 
 ##### Parameters
 
@@ -263,7 +244,7 @@ The **/idtoken** endpoint receives no parameters.
 
 ##### Response
 
-Returns an `IdToken` object containing the entire launch context information. 
+Returns an `IdToken` object containing the entire launch context information.
 
 The contents of the object may vary, since Platforms might return different information, but the information is divided into easy to understand categories:
 
@@ -299,11 +280,6 @@ The contents of the object may vary, since Platforms might return different info
     - document_target
   - **custom** - Custom parameters object.
   - **lineItemId** - Line item assigned to this resource. This field is only present if there is exactly one line item assigned to this resource. Can be used to quickly access the [LineItems endpoint](#lineitems-endpoint) to [submit](#submit-scores) or [retrieve scores](#retrieve-scores).
-  
-  
-
-
-
 
 Example response:
 
@@ -373,12 +349,11 @@ Since the idtoken receives varied information depending on the LMS, fields don't
 ##### Example usage
 
 ```javascript
-const searchParams = new URLSearchParams(window.location.search)
-const ltik = searchParams.get('ltik')
-const idtoken = await request.get(API_URL + '/idtoken', { headers: { Authorization: 'Bearer ' + ltik } }).json()
-return idtoken
+const searchParams = new URLSearchParams(window.location.search);
+const ltik = searchParams.get('ltik');
+const idtoken = await request.get(API_URL + '/idtoken', { headers: { Authorization: 'Bearer ' + ltik } }).json();
+return idtoken;
 ```
-
 
 ### Memberships Endpoint
 
@@ -386,34 +361,32 @@ The **/memberships** endpoint represents the [Names and Roles Provisioning Servi
 
 #### Retrieve memberships
 
-| ROUTE | METHOD  | LTIK REQUIRED |
-| ---- | --- | -- |
-| `/memberships` | `GET` | ✔️ |
+| ROUTE          | METHOD | LTIK REQUIRED |
+| -------------- | ------ | ------------- |
+| `/memberships` | `GET`  | ✔️            |
 
 ##### Parameters
 
-| PARAMETER | TYPE | LOCATION | REQUIRED |
-| --- | -- | -- | ---- |
-| `role` | `String` | `query` |   |
-| `limit` | `Number` | `query`  |   |
-| `url` | `String` | `query`  |   |
-| `resourceLinkId` | `Boolean` | `query`  |   |
-
+| PARAMETER        | TYPE      | LOCATION | REQUIRED |
+| ---------------- | --------- | -------- | -------- |
+| `role`           | `String`  | `query`  |          |
+| `limit`          | `Number`  | `query`  |          |
+| `url`            | `String`  | `query`  |          |
+| `resourceLinkId` | `Boolean` | `query`  |          |
 
 **role:** Filters memberships by role. Possible role values are defined in the [IMS Role Vocabularies](https://www.imsglobal.org/spec/lti/v1p3/#role-vocabularies).
 
 **limit:** Limits the number of memberships returned.
 
-**url:** Retrieves memberships from a specific URL. 
+**url:** Retrieves memberships from a specific URL.
 
-In cases where not all members are retrieved when the membership limit is reached, the returned object will contain a `next` field holding an URL that can be used to retrieve the remaining members. 
+In cases where not all members are retrieved when the membership limit is reached, the returned object will contain a `next` field holding an URL that can be used to retrieve the remaining members.
 
-*When present, the `url` parameter causes every other parameter to be ignored.* 
+_When present, the `url` parameter causes every other parameter to be ignored._
 
 The `url` parameter should be URL encoded.
 
 **resourceLinkId:** Retrieves the Resource Link level memberships as specified in the [IMS Resource Link Membership Service specification](https://www.imsglobal.org/spec/lti-nrps/v2p0#resource-link-membership-service).
-
 
 ##### Response
 
@@ -458,18 +431,19 @@ Example response:
 
 ```
 
-
 ##### Example usage
 
 ```javascript
-const searchParams = new URLSearchParams(window.location.search)
-const ltik = searchParams.get('ltik')
+const searchParams = new URLSearchParams(window.location.search);
+const ltik = searchParams.get('ltik');
 const query = {
-  role: 'Learner',
-  limit: 10
-}
-const response = await request.get(API_URL + '/memberships', { searchParams: query, headers: { Authorization: 'Bearer ' + ltik } }).json()
-return response.members
+	role: 'Learner',
+	limit: 10
+};
+const response = await request
+	.get(API_URL + '/memberships', { searchParams: query, headers: { Authorization: 'Bearer ' + ltik } })
+	.json();
+return response.members;
 ```
 
 ### LineItems Endpoint
@@ -478,22 +452,21 @@ The **/lineitems** endpoints represent the [Assignment and Grade Service](#assig
 
 #### Retrieve line items
 
-| ROUTE | METHOD  | LTIK REQUIRED |
-| ---- | --- | -- |
-| `/lineitems` | `GET` | ✔️ |
+| ROUTE        | METHOD | LTIK REQUIRED |
+| ------------ | ------ | ------------- |
+| `/lineitems` | `GET`  | ✔️            |
 
 ##### Parameters
 
-| PARAMETER | TYPE | LOCATION | REQUIRED |
-| --- | -- | -- | ---- |
-| `id` | `String` | `query` |   |
-| `resourceId` | `String` | `query`  |   |
-| `tag` | `String` | `query`  |   |
-| `label` | `String` | `query`  |   |
-| `resourceLinkId` | `Boolean` | `query`  |   |
-| `limit` | `Number` | `query`  |   |
-| `url` | `String` | `query`  |   |
-
+| PARAMETER        | TYPE      | LOCATION | REQUIRED |
+| ---------------- | --------- | -------- | -------- |
+| `id`             | `String`  | `query`  |          |
+| `resourceId`     | `String`  | `query`  |          |
+| `tag`            | `String`  | `query`  |          |
+| `label`          | `String`  | `query`  |          |
+| `resourceLinkId` | `Boolean` | `query`  |          |
+| `limit`          | `Number`  | `query`  |          |
+| `url`            | `String`  | `query`  |          |
 
 **id:** Retrieves a specific line item by ID. Line item IDs are URLs so the parameter should be URL encoded.
 
@@ -509,9 +482,9 @@ The **/lineitems** endpoints represent the [Assignment and Grade Service](#assig
 
 **url:** Retrieves line items from a specific URL.
 
-In cases where not all line items are retrieved when the line item limit is reached, the returned object will contain a `next` field holding an URL that can be used to retrieve the remaining line items. 
+In cases where not all line items are retrieved when the line item limit is reached, the returned object will contain a `next` field holding an URL that can be used to retrieve the remaining line items.
 
-*When present, the `url` parameter causes every other parameter to be ignored.* 
+_When present, the `url` parameter causes every other parameter to be ignored._
 
 The `url` parameter should be URL encoded.
 
@@ -535,7 +508,7 @@ Example response:
   next: 'https://lms.example.com/sections/2923/lineitems/pages/2',
   first: 'https://lms.example.com/sections/2923/lineitems/pages/1',
   last: 'https://lms.example.com/sections/2923/lineitems/pages/3',
-  lineItems: [  
+  lineItems: [
     {
       id: 'https://lms.example.com/context/2923/lineitems/1',
       scoreMaximum: 60,
@@ -563,25 +536,26 @@ Example response:
 }
 ```
 
-
 ##### Example usage
 
 ```javascript
-const searchParams = new URLSearchParams(window.location.search)
-const ltik = searchParams.get('ltik')
+const searchParams = new URLSearchParams(window.location.search);
+const ltik = searchParams.get('ltik');
 const query = {
-  tag: 'grade_line',
-  label: 'Grade line'
-}
-const response = await request.get(API_URL + '/lineitems', { searchParams: query, headers: { Authorization: 'Bearer ' + ltik } }).json()
-return response.lineItems
+	tag: 'grade_line',
+	label: 'Grade line'
+};
+const response = await request
+	.get(API_URL + '/lineitems', { searchParams: query, headers: { Authorization: 'Bearer ' + ltik } })
+	.json();
+return response.lineItems;
 ```
 
 #### Create line item
 
-| ROUTE | METHOD  | LTIK REQUIRED |
-| ---- | --- | -- |
-| `/lineitems` | `POST` | ✔️ |
+| ROUTE        | METHOD | LTIK REQUIRED |
+| ------------ | ------ | ------------- |
+| `/lineitems` | `POST` | ✔️            |
 
 ##### Parameters
 
@@ -589,23 +563,18 @@ Requests **MUST** have a body representing a Line Item Object as specified in th
 
 The only required parameters are **label** and **scoreMaximum**.
 
-| PARAMETER | TYPE | LOCATION | REQUIRED |
-| --- | -- | -- | ---- |
-| `label` | `String` | `body`  | ✔️ |
-| `scoreMaximum` | `Number` | `body`  | ✔️ |
-
-
+| PARAMETER      | TYPE     | LOCATION | REQUIRED |
+| -------------- | -------- | -------- | -------- |
+| `label`        | `String` | `body`   | ✔️       |
+| `scoreMaximum` | `Number` | `body`   | ✔️       |
 
 **label:** Line item label.
 
 **scoreMaximum:** Maximum score allowed for the line item.
 
-
-
 ##### Response
 
 Returns the newly created line item.
-
 
 Example response:
 
@@ -621,29 +590,30 @@ Example response:
 }
 ```
 
-
 ##### Example usage
 
 ```javascript
-const searchParams = new URLSearchParams(window.location.search)
-const ltik = searchParams.get('ltik')
+const searchParams = new URLSearchParams(window.location.search);
+const ltik = searchParams.get('ltik');
 const lineitem = {
-  scoreMaximum: 60,
-  label: 'Grade line',
-  resourceId: 'quiz-231',
-  tag: 'grade',
-  startDateTime: '2021-03-06T20:05:02Z',
-  endDateTime: '2021-04-06T22:05:03Z'
-}
-const newLineitem = await request.post(API_URL + '/lineitems', { json: lineitem, headers: { Authorization: 'Bearer ' + ltik } }).json()
-return newLineitem
+	scoreMaximum: 60,
+	label: 'Grade line',
+	resourceId: 'quiz-231',
+	tag: 'grade',
+	startDateTime: '2021-03-06T20:05:02Z',
+	endDateTime: '2021-04-06T22:05:03Z'
+};
+const newLineitem = await request
+	.post(API_URL + '/lineitems', { json: lineitem, headers: { Authorization: 'Bearer ' + ltik } })
+	.json();
+return newLineitem;
 ```
 
 #### Retrieve line item by ID
 
-| ROUTE | METHOD  | LTIK REQUIRED |
-| ---- | --- | -- |
-| `/lineitems/:lineitemid` | `GET` | ✔️ |
+| ROUTE                    | METHOD | LTIK REQUIRED |
+| ------------------------ | ------ | ------------- |
+| `/lineitems/:lineitemid` | `GET`  | ✔️            |
 
 The line item ID is an URL so it **MUST be URL encoded**.
 
@@ -651,11 +621,9 @@ The line item ID is an URL so it **MUST be URL encoded**.
 
 The **/lineitems/:lineitemid** GET endpoint receives no parameters.
 
-
 ##### Response
 
 Returns the requested line item.
-
 
 Example response:
 
@@ -674,18 +642,20 @@ Example response:
 ##### Example usage
 
 ```javascript
-const searchParams = new URLSearchParams(window.location.search)
-const ltik = searchParams.get('ltik')
-const lineitemId = 'https://lms.example.com/context/2923/lineitems/1'
-const lineitem = await request.get(API_URL + '/lineitems/' + encodeURIComponent(lineitemId), { headers: { Authorization: 'Bearer ' + ltik } }).json()
-return lineitem
+const searchParams = new URLSearchParams(window.location.search);
+const ltik = searchParams.get('ltik');
+const lineitemId = 'https://lms.example.com/context/2923/lineitems/1';
+const lineitem = await request
+	.get(API_URL + '/lineitems/' + encodeURIComponent(lineitemId), { headers: { Authorization: 'Bearer ' + ltik } })
+	.json();
+return lineitem;
 ```
 
 #### Update line item by ID
 
-| ROUTE | METHOD  | LTIK REQUIRED |
-| ---- | --- | -- |
-| `/lineitems/:lineitemid` | `PUT` | ✔️ |
+| ROUTE                    | METHOD | LTIK REQUIRED |
+| ------------------------ | ------ | ------------- |
+| `/lineitems/:lineitemid` | `PUT`  | ✔️            |
 
 The line item ID is an URL so it **MUST be URL encoded**.
 
@@ -695,22 +665,18 @@ Requests **MUST** have a body representing a Line Item Object as specified in th
 
 The only required parameters are **label** and **scoreMaximum**.
 
-| PARAMETER | TYPE | LOCATION | REQUIRED |
-| --- | -- | -- | ---- |
-| `label` | `String` | `body`  | ✔️ |
-| `scoreMaximum` | `Number` | `body`  | ✔️ |
-
-
+| PARAMETER      | TYPE     | LOCATION | REQUIRED |
+| -------------- | -------- | -------- | -------- |
+| `label`        | `String` | `body`   | ✔️       |
+| `scoreMaximum` | `Number` | `body`   | ✔️       |
 
 **label:** Line item label.
 
 **scoreMaximum:** Maximum score allowed for the line item.
 
-
 ##### Response
 
 Returns the updated line item.
-
 
 Example response:
 
@@ -726,26 +692,30 @@ Example response:
 }
 ```
 
-
 ##### Example usage
 
 ```javascript
-const searchParams = new URLSearchParams(window.location.search)
-const ltik = searchParams.get('ltik')
-const lineitemId = 'https://lms.example.com/context/2923/lineitems/1'
+const searchParams = new URLSearchParams(window.location.search);
+const ltik = searchParams.get('ltik');
+const lineitemId = 'https://lms.example.com/context/2923/lineitems/1';
 const lineitem = {
-  scoreMaximum: 60,
-  label: 'Chapter 5 Updated'
-}
-const updatedLineitem = await request.put(API_URL + '/lineitems/' + encodeURIComponent(lineitemId), { json: lineitem, headers: { Authorization: 'Bearer ' + ltik } }).json()
-return updatedLineitem
+	scoreMaximum: 60,
+	label: 'Chapter 5 Updated'
+};
+const updatedLineitem = await request
+	.put(API_URL + '/lineitems/' + encodeURIComponent(lineitemId), {
+		json: lineitem,
+		headers: { Authorization: 'Bearer ' + ltik }
+	})
+	.json();
+return updatedLineitem;
 ```
 
 #### Delete line item by ID
 
-| ROUTE | METHOD  | LTIK REQUIRED |
-| ---- | --- | -- |
-| `/lineitems/:lineitemid` | `DELETE` | ✔️ |
+| ROUTE                    | METHOD   | LTIK REQUIRED |
+| ------------------------ | -------- | ------------- |
+| `/lineitems/:lineitemid` | `DELETE` | ✔️            |
 
 The line item ID is an URL so it **MUST be URL encoded**.
 
@@ -757,22 +727,23 @@ The **/lineitems/:lineitemid** DELETE endpoint receives no parameters.
 
 Returns `204` if the line item is successfully deleted.
 
-
 ##### Example usage
 
 ```javascript
-const searchParams = new URLSearchParams(window.location.search)
-const ltik = searchParams.get('ltik')
-const lineitemId = 'https://lms.example.com/context/2923/lineitems/1'
-await request.delete(API_URL + '/lineitems/' + encodeURIComponent(lineitemId), { headers: { Authorization: 'Bearer ' + ltik } })
-return true
+const searchParams = new URLSearchParams(window.location.search);
+const ltik = searchParams.get('ltik');
+const lineitemId = 'https://lms.example.com/context/2923/lineitems/1';
+await request.delete(API_URL + '/lineitems/' + encodeURIComponent(lineitemId), {
+	headers: { Authorization: 'Bearer ' + ltik }
+});
+return true;
 ```
 
 #### Submit scores
 
-| ROUTE | METHOD  | LTIK REQUIRED |
-| ---- | --- | -- |
-| `/lineitems/:lineitemid/scores` | `POST` | ✔️ |
+| ROUTE                           | METHOD | LTIK REQUIRED |
+| ------------------------------- | ------ | ------------- |
+| `/lineitems/:lineitemid/scores` | `POST` | ✔️            |
 
 The line item ID is an URL so it **MUST be URL encoded**.
 
@@ -782,12 +753,11 @@ Requests MUST have a body representing a Score Object as specified in the [IMS S
 
 The required parameters are **userId**, **activityProgress** and **gradingProgress**. The parameters **timestamp** and **scoreMaximum** are also required but are set automatically by **GatherAct**.
 
-| PARAMETER | TYPE | LOCATION | REQUIRED |
-| --- | -- | -- | ---- |
-| `userId` | `String` | `body`  | ✔️ |
-| `activityProgress` | `String` | `body`  | ✔️ |
-| `gradingProgress` | `String` | `body`  | ✔️ |
-
+| PARAMETER          | TYPE     | LOCATION | REQUIRED |
+| ------------------ | -------- | -------- | -------- |
+| `userId`           | `String` | `body`   | ✔️       |
+| `activityProgress` | `String` | `body`   | ✔️       |
+| `gradingProgress`  | `String` | `body`   | ✔️       |
 
 **userId:** Target user ID.
 
@@ -795,11 +765,9 @@ The required parameters are **userId**, **activityProgress** and **gradingProgre
 
 **gradingProgress:** Status of the grading process.
 
-
 ##### Response
 
 Returns the submitted score.
-
 
 Example response:
 
@@ -818,36 +786,40 @@ Example response:
 ##### Example usage
 
 ```javascript
-const searchParams = new URLSearchParams(window.location.search)
-const ltik = searchParams.get('ltik')
-const lineitemId = 'https://lms.example.com/context/2923/lineitems/1'
+const searchParams = new URLSearchParams(window.location.search);
+const ltik = searchParams.get('ltik');
+const lineitemId = 'https://lms.example.com/context/2923/lineitems/1';
 const score = {
-  userId: '5323497',
-  activityProgress: 'Completed',
-  gradingProgress: 'FullyGraded',
-  scoreGiven: 83,
-  comment: 'This is exceptional work.',
-}
-const submittedScore = await request.post(API_URL + '/lineitems/' + encodeURIComponent(lineitemId) + '/scores', { json: score, headers: { Authorization: 'Bearer ' + ltik } }).json()
-return submittedScore
+	userId: '5323497',
+	activityProgress: 'Completed',
+	gradingProgress: 'FullyGraded',
+	scoreGiven: 83,
+	comment: 'This is exceptional work.'
+};
+const submittedScore = await request
+	.post(API_URL + '/lineitems/' + encodeURIComponent(lineitemId) + '/scores', {
+		json: score,
+		headers: { Authorization: 'Bearer ' + ltik }
+	})
+	.json();
+return submittedScore;
 ```
 
 #### Retrieve scores
 
-| ROUTE | METHOD  | LTIK REQUIRED |
-| ---- | --- | -- |
-| `/lineitems/:lineitemid/scores` | `GET` | ✔️ |
+| ROUTE                           | METHOD | LTIK REQUIRED |
+| ------------------------------- | ------ | ------------- |
+| `/lineitems/:lineitemid/scores` | `GET`  | ✔️            |
 
 The line item ID is an URL so it **MUST be URL encoded**.
 
 ##### Parameters
 
-| PARAMETER | TYPE | LOCATION | REQUIRED |
-| --- | -- | -- | ---- |
-| `userId` | `String` | `query` |   |
-| `limit` | `Number` | `query`  |   |
-| `url` | `String` | `query`  |   |
-
+| PARAMETER | TYPE     | LOCATION | REQUIRED |
+| --------- | -------- | -------- | -------- |
+| `userId`  | `String` | `query`  |          |
+| `limit`   | `Number` | `query`  |          |
+| `url`     | `String` | `query`  |          |
 
 **userId:** Filters scores based on the user ID.
 
@@ -855,12 +827,11 @@ The line item ID is an URL so it **MUST be URL encoded**.
 
 **url:** Retrieves scores from a specific URL.
 
-In cases where not all scores are retrieved when the score limit is reached, the returned object will contain a `next` field holding an URL that can be used to retrieve the remaining scores. 
+In cases where not all scores are retrieved when the score limit is reached, the returned object will contain a `next` field holding an URL that can be used to retrieve the remaining scores.
 
-*When present, the `url` parameter causes every other parameter to be ignored.* 
+_When present, the `url` parameter causes every other parameter to be ignored._
 
 The `url` parameter should be URL encoded.
-
 
 ##### Response
 
@@ -874,7 +845,6 @@ Other fields present in the response can be:
 - **prev** - URL of the previous score page. **This field is only present if the score limit was reached before the full list was retrieved.**
 - **first** - URL of the first score page. **This field is only present if the score limit was reached before the full list was retrieved.**
 - **last** - URL of the last score page. **This field is only present if the score limit was reached before the full list was retrieved.**
-
 
 Example response:
 
@@ -904,28 +874,30 @@ Example response:
 }
 ```
 
-
 ##### Example usage
 
 ```javascript
-const searchParams = new URLSearchParams(window.location.search)
-const ltik = searchParams.get('ltik')
-const lineitemId = 'https://lms.example.com/context/2923/lineitems/1'
+const searchParams = new URLSearchParams(window.location.search);
+const ltik = searchParams.get('ltik');
+const lineitemId = 'https://lms.example.com/context/2923/lineitems/1';
 const query = {
-  userId: 2,
-  limit: 10
-}
-const response = await request.get(API_URL + '/lineitems/' + encodeURIComponent(lineitemId) + '/scores', { searchParams: query, headers: { Authorization: 'Bearer ' + ltik } }).json()
-return response.scores
+	userId: 2,
+	limit: 10
+};
+const response = await request
+	.get(API_URL + '/lineitems/' + encodeURIComponent(lineitemId) + '/scores', {
+		searchParams: query,
+		headers: { Authorization: 'Bearer ' + ltik }
+	})
+	.json();
+return response.scores;
 ```
-
-
 
 ### Errors
 
 Error responses generated by any of the **GatherAct** endpoints obey the following pattern:
 
-``` javascript
+```javascript
 {
   status: ERROR_STATUS,
   error: ERROR_MESSAGE,
@@ -935,13 +907,13 @@ Error responses generated by any of the **GatherAct** endpoints obey the followi
 
 Example:
 
-``` javascript
+```javascript
 {
   status: 401,
   error: "Unauthorized",
   details: {
     message: "Missing parameter \"token\"."
-    bodyReceived: { 
+    bodyReceived: {
       param: "value"
     }
   }
