@@ -72,16 +72,12 @@ interface IGatheract {
 	host: IUser; // the host is the user that activated the app within the channel
 	isHost: boolean; // indicator if the user is the host
 }
-```
 
-```typescript
 interface IApiConfig {
 	appId: string; // a unique string to identify your app
 	events: IAppEvents;
 }
-```
 
-```typescript
 interface IAppEvents {
 	connected?: (message: IConnected) => void; // callback when the app is connected to a channel
 	disconnected?: (message: IDisconnected) => void; // callback when the app is disconnected to a channel
@@ -89,16 +85,12 @@ interface IAppEvents {
 	channelInfo?: (message: IChannelInfo) => void; // callback when user is added or removed from channel
 	apiMessage?: (message: IMessage) => void; // a catch all message callback
 }
-```
 
-```typescript
 interface IUser {
 	id: string; // user identifier
 	name: string; // display name for that user
 }
-```
 
-```typescript
 interface IChannelInfo {
 	type: 'channel_info';
 	id: string;
@@ -107,25 +99,19 @@ interface IChannelInfo {
 	leftUser?: IUser;
 	host: IUser;
 }
-```
 
-```typescript
 interface IConnectedMessage {
 	type: 'connected';
 	channel_id: string;
 	host: IUser; // user id that activated the app
 	user: IUser; // the current user users: IUser[];
 }
-```
 
-```typescript
 interface IDisconnectedMessage {
 	type: 'disconnected';
 	channelId: string;
 }
-```
 
-```typescript
 interface IAppMessage {
 	type: 'app_message';
 	data: any; // app defined value or object
@@ -193,13 +179,7 @@ Once you have a platform id, you can link and initialize our api
 include the api script:
 
 ```html
-<script type="module" src="https://gatheract.com/api.js"></script>
-```
-
-or import the script:
-
-```javascript
-import { api } from 'https://gatheract.com/api.js';
+<script src="https://gatheract.com/api.js"></script>
 ```
 
 Then initialize the api:
