@@ -1,6 +1,6 @@
 <!-- _coverpage.md -->
 
-[![logo](./docs/assets/logo.svg)](https://ltiaas.cvmcosta.com)
+[![logo](./docs/assets/logo.svg)](https://gatheract.com)
 
 > GatherAct API
 
@@ -11,4 +11,5 @@
 [LTI Integration API](/lti)
 
 <!-- background color -->
+
 ![color](#ffffff)

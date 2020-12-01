@@ -1,9 +1,3 @@
-[![GATHERACT](docs/assets/logo.svg)](https://gatheract.com)
-
-> GatherAct Collaboration API
-
----
-
 ## Introduction
 
 **GatherAct** has two kinds of apps:
@@ -67,16 +61,16 @@ gatheract.sendMessage(data);
 ### Interfaces
 
 ```typescript
-gatheract:{
-    init: (config:IApiConfig) => void
-    sendMessage: (message:IAppMessage, users?: string[], sendToSelf?: boolean) => void;
-    connected:boolean; // indicator if the WebSocket is currently connected to the channel
-    appId:string; // the app identifier provided when the api was initialized
-    channelId:string; // channel identifier
-    users:IUser[]; // list of all users in the channel
-    user: IUser; // the user this app instance represents
-    host: IUser; // the host is the user that activated the app within the channel
-    isHost: boolean; // indicator if the user is the host
+interface IGatheract {
+	init: (config: IApiConfig) => void;
+	sendMessage: (message: IAppMessage, users?: string[], sendToSelf?: boolean) => void;
+	connected: boolean; // indicator if the WebSocket is currently connected to the channel
+	appId: string; // the app identifier provided when the api was initialized
+	channelId: string; // channel identifier
+	users: IUser[]; // list of all users in the channel
+	user: IUser; // the user this app instance represents
+	host: IUser; // the host is the user that activated the app within the channel
+	isHost: boolean; // indicator if the user is the host
 }
 ```
 
@@ -89,12 +83,11 @@ interface IApiConfig {
 
 ```typescript
 interface IAppEvents {
-	// callback when the app is connected to a channel
-	connected?: (message: IConnected) => void; // callback when the app is disconnected to a channel
-	disconnected?: (message: IDisconnected) => void; // callback for messages received from another app instance, from is the id of the from user
-	appMessage?: (data: any, from: string) => void; // callback when user is added or removed from channel
-	channelInfo?: (message: IChannelInfo) => void; // a catch all message callback
-	apiMessage?: (message: IMessage) => void;
+	connected?: (message: IConnected) => void; // callback when the app is connected to a channel
+	disconnected?: (message: IDisconnected) => void; // callback when the app is disconnected to a channel
+	appMessage?: (data: any, from: string) => void; // callback for messages received from another app instance, from is the id of the from user
+	channelInfo?: (message: IChannelInfo) => void; // callback when user is added or removed from channel
+	apiMessage?: (message: IMessage) => void; // a catch all message callback
 }
 ```
 
@@ -227,16 +220,5 @@ interface IApiConfig {
 		activate_app?: (message: IActivateApp) => void;
 		api_message?: (message: IMessage) => void;
 	};
-}
-```
-
-```typescript
-interface IEvents {}
-```
-
-```typescript
-interface IUser {
-	id: string;
-	name: string;
 }
 ```
